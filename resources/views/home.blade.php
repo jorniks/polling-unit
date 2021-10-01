@@ -1,88 +1,45 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-sm text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Polls Dashboard') }}
         </h2>
     </x-slot>
 
-  <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8" x-data="{selected:1}">
-    Hello this is the boggie man
+  <div class="pt-6 pb-12 max-w-5xl mx-auto sm:px-6 lg:px-8" x-data="{selected:null}">
+
+    <p class="pb-3 px-3 font-bold text-xl">
+      List of all polling Units with Results for each unit
+    </p>
+
+    <ul class="shadow-lg bg-white">
     
-    <ul class="shadow-lg">
-      <li class="relative border-b border-gray-200">
-        <button class="w-full px-4 py-3" @click="selected !== 1 ? selected = 1 : selected = null">
-          <div class="flex items-center justify-between">
-            <span>Should I use reCAPTCHA v2 or v3?</span>
+      @foreach($pollingUnits as $pollingUnit)
+        <li class="relative border-b border-gray-200">
+          <div class="w-full px-4 py-3 flex items-center justify-between capitalize">
+            <a class="w-full cursor-pointer" @click="selected !== {{ $pollingUnit->uniqueid }} ? selected = {{ $pollingUnit->uniqueid }} : selected = null">
+              {{ $pollingUnit->polling_unit_name }}
+            </a>
             <span class="fas fa-caret-down"></span>
           </div>
-        </button>
 
-        <div class="border-t relative overflow-hidden transition-all max-h-0 duration-700" style="" x-ref="container1" x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
-          <div class="p-6">
-            <table class="w-full">
-              <tr>
-                <td class="border px-2 py-2">Alfreds Futterkiste</td>
-                <td class="border px-2 py-2">Dante Sparks</td>
-              </tr>
-              <tr>
-                <td class="border px-2 py-2">Centro comercial Moctezuma</td>
-                <td class="border px-2 py-2">Neal Garrison</td>
-              </tr>
-            </table>
+          <div class="border-t relative overflow-hidden transition-all max-h-0 duration-700" x-ref="container{{ $pollingUnit->uniqueid }}" x-bind:style="selected == {{ $pollingUnit->uniqueid }} ? 'max-height: ' + $refs.container{{ $pollingUnit->uniqueid }}.scrollHeight + 'px' : ''">
+            <div class="p-6">
+              <table class="w-full">
+                @foreach($results as $result)
+                  @if($pollingUnit->uniqueid == $result->polling_unit_uniqueid)
+                    <tr>
+                      <td class="border px-2 py-2">{{ $result->party_abbreviation }}</td>
+                      <td class="border px-2 py-2">{{ number_format($result->party_score) }}</td>
+                    </tr>
+                  @endif
+                @endforeach
+              </table>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      @endforeach
 
-
-      <li class="relative border-b border-gray-200">
-        <button class="w-full px-4 py-3" @click="selected !== 2 ? selected = 2 : selected = null">
-          <div class="flex items-center justify-between">
-            <span>I'd like to run automated tests with reCAPTCHA. What should I do?</span>
-            <span class="fas fa-caret-down"></span>
-          </div>
-        </button>
-
-        <div class="border-t relative overflow-hidden transition-all max-h-0 duration-700" style="" x-ref="container2" x-bind:style="selected == 2 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''">
-          <div class="p-6">
-            <table class="w-full">
-              <tr>
-                <td class="border px-2 py-2">Alfreds Futterkiste</td>
-                <td class="border px-2 py-2">Dante Sparks</td>
-              </tr>
-              <tr>
-                <td class="border px-2 py-2">Centro comercial Moctezuma</td>
-                <td class="border px-2 py-2">Neal Garrison</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </li>
-
-      <li class="relative border-b border-gray-200">
-        <button class="w-full px-4 py-3" @click="selected !== 3 ? selected = 3 : selected = null">
-          <div class="flex items-center justify-between">
-            <span>Can I run reCAPTCHA v2 and v3 on the same page?</span>
-            <span class="fas fa-caret-down"></span>
-          </div>
-        </button>
-
-        <div class="border-t relative overflow-hidden transition-all max-h-0 duration-700" style="" x-ref="container3" x-bind:style="selected == 3 ? 'max-height: ' + $refs.container3.scrollHeight + 'px' : ''">
-          <div class="p-6">
-            <table class="w-full">
-              <tr>
-                <td class="border px-2 py-2">Alfreds Futterkiste</td>
-                <td class="border px-2 py-2">Dante Sparks</td>
-              </tr>
-              <tr>
-                <td class="border px-2 py-2">Centro comercial Moctezuma</td>
-                <td class="border px-2 py-2">Neal Garrison</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </li>
     </ul>
-
 
   </div>
 </x-app-layout>

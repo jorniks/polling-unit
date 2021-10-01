@@ -46,7 +46,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="/">
-              {{ __('Dashboard') }}
+              {{ __('Polls Result') }}
             </x-jet-responsive-nav-link>
         </div>
 

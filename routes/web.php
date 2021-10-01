@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,16 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'fetchAllPollingUnitsResult']);
 
 
 Route::get('/polling', function () {
-    return view('all_polling');
+  return view('all_polling');
 });
 
 
 Route::get('/update', function () {
-    return view('update_result');
+  return view('update_result');
 });

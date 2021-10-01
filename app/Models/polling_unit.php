@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class polling_unit extends Model
-{
-    use HasFactory;
+class polling_unit extends Model {
+  use HasFactory;
+
 }
